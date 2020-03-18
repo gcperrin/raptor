@@ -61,8 +61,7 @@ jucer_project_files("vst/Source"
   .         .         .         "Source/PluginProcessor.h"
   x         .         .         "Source/PluginEditor.cpp"
   .         .         .         "Source/PluginEditor.h"
-  x         .         .         "Source/DistortionProcessor.cpp"
-  .         .         .         "Source/DistortionProcessor.h"
+  x         .         .         "Source/DistortionProcessor.h"
 )
 
 jucer_project_module(
@@ -145,6 +144,11 @@ jucer_project_module(
 
 jucer_project_module(
   juce_data_structures
+  PATH "../juce/modules"
+)
+
+jucer_project_module(
+  juce_dsp
   PATH "../juce/modules"
 )
 

@@ -1,12 +1,3 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-    It contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
-*/
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
@@ -20,6 +11,14 @@ VstAudioProcessorEditor::VstAudioProcessorEditor (VstAudioProcessor& p)
     // editor's size to whatever you need it to be.
 
     setSize (800, 600);
+
+    slider.setRange (0, 10, 0);
+    slider.setSliderStyle (Slider::LinearHorizontal);
+    slider.setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    slider.setBounds (200, 448, 150, 24);
+
+    slider.addListener (this);
+    addAndMakeVisible (&slider);
 
 }
 
@@ -35,7 +34,7 @@ void VstAudioProcessorEditor::paint (Graphics& g)
 
     g.setColour (Colours::white);
     g.setFont (15.0f);
-    g.drawFittedText ("Hello puppii!", getLocalBounds(), Justification::centred, 1);
+    g.drawFittedText ("Hello asshat!", getLocalBounds(), Justification::centred, 1);
 
 }
 
@@ -43,14 +42,13 @@ void VstAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-  slider.reset (new Slider ("new slider"));
-    addAndMakeVisible (slider.get());
-    slider->setRange (0, 10, 0);
-    slider->setSliderStyle (Slider::LinearHorizontal);
-    slider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
-    // slider->addListener (this);
+    // slider.reset (new Slider ("new slider"));
+    // addAndMakeVisible (slider.get());
+    // slider->setRange (0, 10, 0);
+    // slider->setSliderStyle (Slider::LinearHorizontal);
+    // slider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
 
-    slider->setBounds (200, 448, 150, 24);
+    // slider->setBounds (200, 448, 150, 24);
 
     toggleButton.reset (new ToggleButton ("yung_money"));
     addAndMakeVisible (toggleButton.get());
@@ -59,4 +57,9 @@ void VstAudioProcessorEditor::resized()
     toggleButton->setBounds (488, 448, 150, 24);
 
 
+}
+
+void VstAudioProcessorEditor::sliderValueChanged (Slider* slider)
+{
+    processor.inputGain = -10f;
 }

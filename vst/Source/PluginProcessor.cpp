@@ -10,6 +10,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "DistortionProcessor.h"
 
 #define ISDEV 1
 
@@ -156,13 +157,19 @@ void VstAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& mi
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer (channel);
+    // for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    // {
+    //     auto* channelData = buffer.getWritePointer (channel);
 
 
-        // ..do something to the data...
-    }
+    //     // ..do something to the data...
+    auto block = juce::dsp::AudioBlock<float> (buffer);
+    auto context = juce::dsp::ProcessContextReplacing<float> (block);
+    fxChain.process (context);
+}
+
+void VstAudioProcessor::setInputGain(float gain)
+{
 }
 
 //==============================================================================
@@ -196,3 +203,6 @@ AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new VstAudioProcessor();
 }
+
+// All VST UI paramater values need to reside here for access from listeners in
+// the appropraite plugin editor classes

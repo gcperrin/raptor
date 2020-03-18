@@ -1,12 +1,3 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-    It contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
-*/
 
 #pragma once
 
@@ -16,7 +7,8 @@
 //==============================================================================
 /**
 */
-class VstAudioProcessorEditor  : public AudioProcessorEditor
+class VstAudioProcessorEditor  : public AudioProcessorEditor,
+                                 private Slider::Listener
 
 {
 public:
@@ -28,10 +20,11 @@ public:
     void resized() override;
 
 private:
+    void sliderValueChanged (Slider* slider) override;
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     VstAudioProcessor& processor;
-    std::unique_ptr<Slider> slider;
+    Slider slider;
     std::unique_ptr<ToggleButton> toggleButton;
 
 
