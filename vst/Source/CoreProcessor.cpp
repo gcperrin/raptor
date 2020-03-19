@@ -1,12 +1,12 @@
 
-#include "PluginProcessor.h"
-#include "PluginEditor.h"
+#include "CoreProcessor.h"
+#include "CoreEditor.h"
 #include "dsp/DistortionProcessor.h"
 #include "dsp/GainProcessor.h"
 
 #define ISDEV 1
 
-VstAudioProcessor::VstAudioProcessor()
+CoreProcessor::CoreProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
@@ -26,16 +26,16 @@ VstAudioProcessor::VstAudioProcessor()
 
 }
 
-VstAudioProcessor::~VstAudioProcessor()
+CoreProcessor::~CoreProcessor()
 {
 }
 
-const String VstAudioProcessor::getName() const
+const String CoreProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool VstAudioProcessor::acceptsMidi() const
+bool CoreProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
     return true;
@@ -44,7 +44,7 @@ bool VstAudioProcessor::acceptsMidi() const
    #endif
 }
 
-bool VstAudioProcessor::producesMidi() const
+bool CoreProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
     return true;
@@ -53,7 +53,7 @@ bool VstAudioProcessor::producesMidi() const
    #endif
 }
 
-bool VstAudioProcessor::isMidiEffect() const
+bool CoreProcessor::isMidiEffect() const
 {
    #if JucePlugin_IsMidiEffect
     return true;
@@ -62,50 +62,50 @@ bool VstAudioProcessor::isMidiEffect() const
    #endif
 }
 
-double VstAudioProcessor::getTailLengthSeconds() const
+double CoreProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int VstAudioProcessor::getNumPrograms()
+int CoreProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
                 // so this should be at least 1, even if you're not really implementing programs.
 }
 
-int VstAudioProcessor::getCurrentProgram()
+int CoreProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void VstAudioProcessor::setCurrentProgram (int index)
+void CoreProcessor::setCurrentProgram (int index)
 {
 }
 
-const String VstAudioProcessor::getProgramName (int index)
+const String CoreProcessor::getProgramName (int index)
 {
     return {};
 }
 
-void VstAudioProcessor::changeProgramName (int index, const String& newName)
+void CoreProcessor::changeProgramName (int index, const String& newName)
 {
 }
 
 //==============================================================================
-void VstAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void CoreProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
 }
 
-void VstAudioProcessor::releaseResources()
+void CoreProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool VstAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool CoreProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
   #if JucePlugin_IsMidiEffect
     ignoreUnused (layouts);
@@ -128,7 +128,7 @@ bool VstAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) cons
 }
 #endif
 
-void VstAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
+void CoreProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
@@ -138,9 +138,6 @@ void VstAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& mi
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-
-    // Set fx chain parameters
-
     // Process audio block with chain
     auto block = juce::dsp::AudioBlock<float> (buffer);
     auto context = juce::dsp::ProcessContextReplacing<float> (block);
@@ -149,25 +146,25 @@ void VstAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& mi
 
 
 //==============================================================================
-bool VstAudioProcessor::hasEditor() const
+bool CoreProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-AudioProcessorEditor* VstAudioProcessor::createEditor()
+AudioProcessorEditor* CoreProcessor::createEditor()
 {
-    return new VstAudioProcessorEditor (*this);
+    return new CoreEditor (*this);
 }
 
 //==============================================================================
-void VstAudioProcessor::getStateInformation (MemoryBlock& destData)
+void CoreProcessor::getStateInformation (MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
 }
 
-void VstAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void CoreProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
@@ -177,12 +174,12 @@ void VstAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new VstAudioProcessor();
+    return new CoreProcessor();
 }
 
 // All VST UI paramater values need to reside here for access from listeners in
 // the appropraite plugin editor classes
-void VstAudioProcessor::setGain(float level)
+void CoreProcessor::setGain(float level)
 {
    auto& preGain = fxChain.template get<preGainIndex>();
    preGain.params->level = level;

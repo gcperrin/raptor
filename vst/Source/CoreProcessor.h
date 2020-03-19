@@ -5,15 +5,12 @@
 #include "dsp/DistortionProcessor.h"
 #include "dsp/GainProcessor.h"
 
-
-/**
-*/
-class VstAudioProcessor  : public AudioProcessor
+class CoreProcessor  : public AudioProcessor
 {
 public:
     //==============================================================================
-    VstAudioProcessor();
-    ~VstAudioProcessor();
+    CoreProcessor();
+    ~CoreProcessor();
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -52,7 +49,7 @@ public:
 
 private:
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (VstAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CoreProcessor)
     std::unique_ptr<Logger> logger;
 
     enum

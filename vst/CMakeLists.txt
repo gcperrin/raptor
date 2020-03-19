@@ -8,6 +8,9 @@ project("vst")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/../frut/prefix/FRUT/cmake")
 include(Reprojucer)
 
+set(NAME
+  "vst"
+)
 
 set(vst_jucer_FILE
   "${CMAKE_CURRENT_LIST_DIR}/vst.jucer"
@@ -21,7 +24,7 @@ jucer_project_begin(
 )
 
 jucer_project_settings(
-  PROJECT_NAME "vst"
+  PROJECT_NAME "${NAME}"
   PROJECT_VERSION "1.0.0"
   REPORT_JUCE_APP_USAGE ON # Required for closed source applications without an Indie or Pro JUCE license
   DISPLAY_THE_JUCE_SPLASH_SCREEN ON # Required for closed source applications without an Indie or Pro JUCE license
@@ -36,8 +39,8 @@ jucer_audio_plugin_settings(
     "AU"
     "Standalone"
   # PLUGIN_CHARACTERISTICS
-  PLUGIN_NAME "vst"
-  PLUGIN_DESCRIPTION "vst"
+  PLUGIN_NAME "${NAME}"
+  PLUGIN_DESCRIPTION "An audio plugin..."
   PLUGIN_MANUFACTURER "yourcompany"
   PLUGIN_MANUFACTURER_CODE "Manu"
   PLUGIN_CODE "Zfg9"
@@ -57,10 +60,10 @@ jucer_audio_plugin_settings(
 jucer_project_files("vst/Source"
 # Compile   Xcode     Binary    File
 #           Resource  Resource
-  x         .         .         "Source/PluginProcessor.cpp"
-  .         .         .         "Source/PluginProcessor.h"
-  x         .         .         "Source/PluginEditor.cpp"
-  .         .         .         "Source/PluginEditor.h"
+  x         .         .         "Source/CoreProcessor.cpp"
+  .         .         .         "Source/CoreProcessor.h"
+  x         .         .         "Source/CoreEditor.cpp"
+  .         .         .         "Source/CoreEditor.h"
   x         .         .         "Source/dsp/DistortionProcessor.h"
   x         .         .         "Source/dsp/GainProcessor.h"
 )

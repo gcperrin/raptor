@@ -1,10 +1,9 @@
 
-#include "PluginProcessor.h"
-#include "PluginEditor.h"
+#include "CoreProcessor.h"
+#include "CoreEditor.h"
 
 
-//==============================================================================
-VstAudioProcessorEditor::VstAudioProcessorEditor (VstAudioProcessor& p)
+CoreEditor::CoreEditor (CoreProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
     // Make sure that before the constructor has finished, you've set the
@@ -22,12 +21,9 @@ VstAudioProcessorEditor::VstAudioProcessorEditor (VstAudioProcessor& p)
 
 }
 
-VstAudioProcessorEditor::~VstAudioProcessorEditor()
-{
-}
+CoreEditor::~CoreEditor() {}
 
-//==============================================================================
-void VstAudioProcessorEditor::paint (Graphics& g)
+void CoreEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
@@ -38,7 +34,7 @@ void VstAudioProcessorEditor::paint (Graphics& g)
 
 }
 
-void VstAudioProcessorEditor::resized()
+void CoreEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
@@ -59,7 +55,7 @@ void VstAudioProcessorEditor::resized()
 
 }
 
-void VstAudioProcessorEditor::sliderValueChanged (Slider* slider)
+void CoreEditor::sliderValueChanged (Slider* slider)
 {
     processor.setGain(slider->getValue());
     return;
