@@ -34,7 +34,7 @@ void VstAudioProcessorEditor::paint (Graphics& g)
 
     g.setColour (Colours::white);
     g.setFont (15.0f);
-    g.drawFittedText ("Hello asshat!", getLocalBounds(), Justification::centred, 1);
+    g.drawFittedText ("Hello turd!", getLocalBounds(), Justification::centred, 1);
 
 }
 
@@ -61,5 +61,6 @@ void VstAudioProcessorEditor::resized()
 
 void VstAudioProcessorEditor::sliderValueChanged (Slider* slider)
 {
-    processor.inputGain = -10f;
+    processor.setGain(slider->getValue());
+    return;
 }

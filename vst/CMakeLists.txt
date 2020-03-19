@@ -61,7 +61,8 @@ jucer_project_files("vst/Source"
   .         .         .         "Source/PluginProcessor.h"
   x         .         .         "Source/PluginEditor.cpp"
   .         .         .         "Source/PluginEditor.h"
-  x         .         .         "Source/DistortionProcessor.h"
+  x         .         .         "Source/dsp/DistortionProcessor.h"
+  x         .         .         "Source/dsp/GainProcessor.h"
 )
 
 jucer_project_module(

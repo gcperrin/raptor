@@ -4,18 +4,13 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 
-//==============================================================================
-/**
-*/
 class VstAudioProcessorEditor  : public AudioProcessorEditor,
                                  private Slider::Listener
-
 {
 public:
     VstAudioProcessorEditor (VstAudioProcessor&);
     ~VstAudioProcessorEditor();
 
-    //==============================================================================
     void paint (Graphics&) override;
     void resized() override;
 
@@ -26,8 +21,6 @@ private:
     VstAudioProcessor& processor;
     Slider slider;
     std::unique_ptr<ToggleButton> toggleButton;
-
-
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (VstAudioProcessorEditor)
 };

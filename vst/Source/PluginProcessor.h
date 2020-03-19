@@ -1,9 +1,10 @@
 
-
 #pragma once
 
 #include <JuceHeader.h>
-#include "DistortionProcessor.h"
+#include "dsp/DistortionProcessor.h"
+#include "dsp/GainProcessor.h"
+
 
 /**
 */
@@ -47,10 +48,21 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    void setGain(float level);
+
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (VstAudioProcessor)
     std::unique_ptr<Logger> logger;
-    juce::dsp::ProcessorChain<Distortion<float>> fxChain;
+
+    enum
+    {
+     preGainIndex,
+     distortionIndex,
+     postGainIndex,
+    };
+    juce::dsp::ProcessorChain<GainProcessor<float>,
+                              DistortionProcessor<float>,
+                              GainProcessor<float>> fxChain;
 
 };
