@@ -9,7 +9,7 @@ public:
 
         bandOne.setButtonText ("Band 1");
         // openButton.onClick = [this] { openButtonClicked(); };
-        bandOne.setEnabled (true);
+        // bandOne.setEnabled (false); // use with enablementChanged callback
 
         bandTwo.setButtonText ("Band 2");
         bandThree.setButtonText("Band 3");

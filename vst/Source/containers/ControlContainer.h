@@ -1,11 +1,13 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "../components/WaveShaperComponent.h"
 
 class ControlContainer: public Component {
 public:
     ControlContainer()
     {
+        addAndMakeVisible(waveShaperComponent);
     }
 
     void paint (Graphics& g) override
@@ -24,15 +26,18 @@ public:
 
     void resized() override
     {
-        FlexBox fb;
-        fb.flexWrap = FlexBox::Wrap::wrap;
-        fb.justifyContent = FlexBox::JustifyContent::center;
-        fb.alignContent = FlexBox::AlignContent::center;
-        fb.performLayout (getLocalBounds().toFloat());
+        Grid grid;
+        using Track = Grid::TrackInfo;
+
+        grid.templateRows = { Track (1_fr) };
+        grid.templateColumns = { Track (1_fr) };
+        grid.items = { GridItem (waveShaperComponent) };
+        grid.performLayout (getLocalBounds());
     }
 
     Colour backgroundColour;
 
 private:
 
+    WaveShaperComponent waveShaperComponent;
 };

@@ -35,7 +35,7 @@ void CoreEditor::resized()
     Grid grid;
     using Track = Grid::TrackInfo;
 
-    grid.templateRows = { Track (4_fr), Track (1_fr), Track (4_fr) };
+    grid.templateRows = { Track (10_fr), Track (1_fr), Track (10_fr) };
     grid.templateColumns = { Track (1_fr) };
     grid.items = { GridItem (bandEqContainer), GridItem (bandSelectorContainer), GridItem (controlContainer) };
     grid.performLayout (getLocalBounds());
