@@ -1,11 +1,12 @@
-
 #pragma once
 
 #include <JuceHeader.h>
 #include "CoreProcessor.h"
+#include "containers/BandEQContainer.h"
+#include "containers/BandSelectorContainer.h"
+#include "containers/ControlContainer.h"
 
-class CoreEditor  : public AudioProcessorEditor,
-                    private Slider::Listener
+class CoreEditor : public AudioProcessorEditor
 {
 public:
     CoreEditor (CoreProcessor&);
@@ -15,14 +16,10 @@ public:
     void resized() override;
 
 private:
-    void sliderValueChanged (Slider* slider) override;
-
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
     CoreProcessor& processor;
-
-    Slider slider;
-    std::unique_ptr<ToggleButton> toggleButton;
+    BandEQContainer bandEqContainer;
+    BandSelectorContainer bandSelectorContainer;
+    ControlContainer controlContainer;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CoreEditor)
 };

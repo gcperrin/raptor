@@ -6,18 +6,17 @@
 CoreEditor::CoreEditor (CoreProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
 
+    setResizable (true, false);
+    setResizeLimits (300, 250, 10000, 10000);
+    centreWithSize (getWidth(), getHeight());
+
+    // setSize (800, 600);
+    addAndMakeVisible(bandEqContainer);
+    addAndMakeVisible(bandSelectorContainer);
+    addAndMakeVisible(controlContainer);
     setSize (800, 600);
 
-    slider.setRange (0, 10, 0);
-    slider.setSliderStyle (Slider::LinearHorizontal);
-    slider.setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
-    slider.setBounds (200, 448, 150, 24);
-
-    slider.addListener (this);
-    addAndMakeVisible (&slider);
 
 }
 
@@ -26,37 +25,18 @@ CoreEditor::~CoreEditor() {}
 void CoreEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
-
-    g.setColour (Colours::white);
-    g.setFont (15.0f);
-    g.drawFittedText ("Hello turd!", getLocalBounds(), Justification::centred, 1);
+    // g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+    // g.setColour (Colours::white);
 
 }
 
 void CoreEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
-    // slider.reset (new Slider ("new slider"));
-    // addAndMakeVisible (slider.get());
-    // slider->setRange (0, 10, 0);
-    // slider->setSliderStyle (Slider::LinearHorizontal);
-    // slider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    Grid grid;
+    using Track = Grid::TrackInfo;
 
-    // slider->setBounds (200, 448, 150, 24);
-
-    toggleButton.reset (new ToggleButton ("yung_money"));
-    addAndMakeVisible (toggleButton.get());
-    // toggleButton->addListener (this);
-
-    toggleButton->setBounds (488, 448, 150, 24);
-
-
-}
-
-void CoreEditor::sliderValueChanged (Slider* slider)
-{
-    processor.setGain(slider->getValue());
-    return;
+    grid.templateRows = { Track (4_fr), Track (1_fr), Track (4_fr) };
+    grid.templateColumns = { Track (1_fr) };
+    grid.items = { GridItem (bandEqContainer), GridItem (bandSelectorContainer), GridItem (controlContainer) };
+    grid.performLayout (getLocalBounds());
 }
