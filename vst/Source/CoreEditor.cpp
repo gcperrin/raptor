@@ -1,6 +1,6 @@
-
 #include "CoreProcessor.h"
 #include "CoreEditor.h"
+#include "CoreStyle.h"
 
 
 CoreEditor::CoreEditor (CoreProcessor& p)

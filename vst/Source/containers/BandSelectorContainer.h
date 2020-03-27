@@ -1,28 +1,37 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "../CoreStyle.h"
 
 class BandSelectorContainer: public Component {
 public:
     BandSelectorContainer()
     {
+      bandOne.setComponentID("b1");
+      bandOne.setLookAndFeel(&coreStyle);
+      bandOne.setButtonText ("Band 1");
+      bandOne.onClick = [this] { buttonClicked(); };
+      bandOne.setToggleState(true, NotificationType::dontSendNotification);
+      // openButton.onClick = [this] { openButtonClicked(); };
+      /* bandOne.setEnabled (true); // use with enablementChanged callback */
 
-        bandOne.setButtonText ("Band 1");
-        // openButton.onClick = [this] { openButtonClicked(); };
-        // bandOne.setEnabled (false); // use with enablementChanged callback
+      bandTwo.setComponentID("b2");
+      bandTwo.setLookAndFeel(&coreStyle);
+      bandTwo.setButtonText ("Band 2");
 
-        bandTwo.setButtonText ("Band 2");
-        bandThree.setButtonText("Band 3");
+      bandThree.setComponentID("b3");
+      bandThree.setLookAndFeel(&coreStyle);
+      bandThree.setButtonText("Band 3");
 
-        addAndMakeVisible(bandOne);
-        addAndMakeVisible(bandTwo);
-        addAndMakeVisible(bandThree);
+      addAndMakeVisible(bandOne);
+      addAndMakeVisible(bandTwo);
+      addAndMakeVisible(bandThree);
     }
 
     void paint (Graphics& g) override
     {
         g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
-        g.setColour (Colours::darkgrey);
+        g.setColour (Colours::black);
 
         Rectangle<int> container = getLocalBounds();
         Rectangle<int> innerContainer = container.withSizeKeepingCentre(container.getWidth() - 2,
@@ -44,9 +53,15 @@ public:
         grid.performLayout (getLocalBounds());
     }
 
+    void buttonClicked(TextButton band) {
+      band.setToggleState(true, NotificationType::dontSendNotification);
+    }
+
     Colour backgroundColour;
 
 private:
+    CoreStyle coreStyle;
+    TextButton activeButton;
     TextButton bandOne;
     TextButton bandTwo;
     TextButton bandThree;
