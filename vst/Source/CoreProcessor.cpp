@@ -141,7 +141,15 @@ void CoreProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMe
     // Process audio block with chain
     auto block = juce::dsp::AudioBlock<float> (buffer);
     auto context = juce::dsp::ProcessContextReplacing<float> (block);
+    auto context2 = juce::dsp::ProcessContextReplacing<float> (block);
+    auto context3 = juce::dsp::ProcessContextReplacing<float> (block);
+
+
+    // Audio input is independent to create the parallel processing chain
     fxChain.process (context);
+    fxChain2.process (context2);
+    fxChain3.process (context3);
+
 }
 
 

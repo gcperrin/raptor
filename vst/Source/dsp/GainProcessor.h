@@ -6,7 +6,7 @@ template <typename Type>
 class GainProcessor
 {
 public:
-    struct Parameters : dsp::ProcessorState
+    struct Parameters : juce::dsp::ProcessorState
     {
         float level = 0.0f;
         using Ptr = ReferenceCountedObjectPtr<Parameters>;
@@ -37,5 +37,5 @@ public:
     typename Parameters::Ptr params = new Parameters;
 
 private:
-    juce::dsp::ProcessorWrapper<juce::dsp::Gain<Type>> gain;
+    dsp::ProcessorWrapper<dsp::Gain<Type>> gain;
 };

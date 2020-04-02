@@ -10,7 +10,7 @@ public:
       bandOne.setComponentID("b1");
       bandOne.setLookAndFeel(&coreStyle);
       bandOne.setButtonText ("Band 1");
-      bandOne.onClick = [this] { buttonClicked(); };
+      /* bandOne.onClick = [this] { buttonClicked(); }; */
       bandOne.setToggleState(true, NotificationType::dontSendNotification);
       // openButton.onClick = [this] { openButtonClicked(); };
       /* bandOne.setEnabled (true); // use with enablementChanged callback */

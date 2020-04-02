@@ -62,4 +62,12 @@ private:
                               DistortionProcessor<float>,
                               GainProcessor<float>> fxChain;
 
+    juce::dsp::ProcessorChain<GainProcessor<float>,
+                              DistortionProcessor<float>,
+                              GainProcessor<float>> fxChain2;
+
+    juce::dsp::ProcessorChain<GainProcessor<float>,
+                              DistortionProcessor<float>,
+                              GainProcessor<float>> fxChain3;
 };
+
