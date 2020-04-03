@@ -1,4 +1,3 @@
-
 #include "CoreProcessor.h"
 #include "CoreEditor.h"
 #include "dsp/DistortionProcessor.h"
@@ -143,7 +142,6 @@ void CoreProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMe
     auto context = juce::dsp::ProcessContextReplacing<float> (block);
     auto context2 = juce::dsp::ProcessContextReplacing<float> (block);
     auto context3 = juce::dsp::ProcessContextReplacing<float> (block);
-
 
     // Audio input is independent to create the parallel processing chain
     fxChain.process (context);

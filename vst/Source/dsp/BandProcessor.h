@@ -1,3 +1,5 @@
+#include <JuceHeader.h>
+
 template <typename Type>
 class Filter
 {
