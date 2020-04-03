@@ -3,6 +3,7 @@
 #include <JuceHeader.h>
 #include "dsp/DistortionProcessor.h"
 #include "dsp/GainProcessor.h"
+#include "dsp/FilterProcessor.h"
 
 class CoreProcessor  : public AudioProcessor
 {
@@ -48,25 +49,31 @@ public:
 
 private:
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CoreProcessor)
     std::unique_ptr<Logger> logger;
 
     enum
     {
      preGainIndex,
+     filterIndex,
      distortionIndex,
      postGainIndex,
     };
+
     juce::dsp::ProcessorChain<GainProcessor<float>,
+                              FilterProcessor<float>,
                               DistortionProcessor<float>,
                               GainProcessor<float>> fxChain;
 
     juce::dsp::ProcessorChain<GainProcessor<float>,
+                              FilterProcessor<float>,
                               DistortionProcessor<float>,
                               GainProcessor<float>> fxChain2;
 
     juce::dsp::ProcessorChain<GainProcessor<float>,
+                              FilterProcessor<float>,
                               DistortionProcessor<float>,
                               GainProcessor<float>> fxChain3;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CoreProcessor)
 };
 

@@ -1,7 +1,8 @@
 #include "CoreProcessor.h"
 #include "CoreEditor.h"
-#include "dsp/DistortionProcessor.h"
-#include "dsp/GainProcessor.h"
+/* #include "dsp/DistortionProcessor.h" */
+/* #include "dsp/GainProcessor.h" */
+/* #include "dsp/FilterProcessor.h" */
 
 #define ISDEV 1
 
@@ -17,11 +18,6 @@ CoreProcessor::CoreProcessor()
                        )
 #endif
 {
-  // Create logger
-  if (ISDEV == true) {
-      // logger = std::unique_ptr<Logger>(Logger());
-  }
-  logger->writeToLog("Tessss");
 
 }
 
@@ -95,6 +91,23 @@ void CoreProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+  dsp::ProcessSpec spec;
+  spec.sampleRate = sampleRate;
+  spec.maximumBlockSize = samplesPerBlock;
+  spec.numChannels = getTotalNumInputChannels();
+
+  auto& filterOne = fxChain.template get<filterIndex>();
+  filterOne.prepare(spec);
+  filterOne.setCutoff(100.0f);
+
+  auto& filterTwo = fxChain2.template get<filterIndex>();
+  filterTwo.prepare(spec);
+  filterTwo.setCutoff(1000.0f);
+
+  auto& filterThree = fxChain3.template get<filterIndex>();
+  filterThree.prepare(spec);
+  filterThree.setCutoff(10000.0f);
+
 }
 
 void CoreProcessor::releaseResources()

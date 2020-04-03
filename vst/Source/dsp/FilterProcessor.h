@@ -9,22 +9,20 @@ public:
     //==============================================================================
     FilterProcessor()
     {
-      float initCutoff = 1000.0f;
-      cutoff = &initCutoff;
+      cutoff = 1000.0f;
     }
 
     void setCutoff(float nextCutoff)
     {
-      cutoff = &nextCutoff;
+      cutoff = nextCutoff;
     }
 
     //==============================================================================
     void prepare (const juce::dsp::ProcessSpec& spec)
     {
-      auto coeff = FilterCoefs::makeFirstOrderHighPass (spec.sampleRate, 1000.0f);
+      auto coeff = FilterCoefs::makeBandPass (spec.sampleRate, cutoff);
       auto& procFilter = filter.template get<0>();
       procFilter.state = *coeff;
-      /* *filter.template get<1>().state = coeff; */
       filter.prepare (spec);
     }
 
@@ -43,7 +41,7 @@ public:
 
 private:
     //==============================================================================
-    float *cutoff;
+    float cutoff;
 
     using IIRFilter = dsp::IIR::Filter<Type>;
     using FilterCoefs = dsp::IIR::Coefficients<Type>;
