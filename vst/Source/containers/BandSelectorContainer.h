@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include "../CoreStyle.h"
+#include "ControlContainer.h"
 
 class BandSelectorContainer: public Component {
 public:
@@ -10,18 +11,19 @@ public:
       bandOne.setComponentID("b1");
       bandOne.setLookAndFeel(&coreStyle);
       bandOne.setButtonText ("Band 1");
-      /* bandOne.onClick = [this] { buttonClicked(); }; */
-      bandOne.setToggleState(true, NotificationType::dontSendNotification);
-      // openButton.onClick = [this] { openButtonClicked(); };
+      bandOne.onClick = [this] { buttonClicked(1); };
+      /* bandOne.setToggleState(true, NotificationType::dontSendNotification); */
       /* bandOne.setEnabled (true); // use with enablementChanged callback */
 
       bandTwo.setComponentID("b2");
       bandTwo.setLookAndFeel(&coreStyle);
       bandTwo.setButtonText ("Band 2");
+      bandTwo.onClick = [this] { buttonClicked(2); };
 
       bandThree.setComponentID("b3");
       bandThree.setLookAndFeel(&coreStyle);
       bandThree.setButtonText("Band 3");
+      bandThree.onClick = [this] { buttonClicked(3); };
 
       addAndMakeVisible(bandOne);
       addAndMakeVisible(bandTwo);
@@ -53,9 +55,31 @@ public:
         grid.performLayout (getLocalBounds());
     }
 
-    void buttonClicked(TextButton band) {
-      band.setToggleState(true, NotificationType::dontSendNotification);
+    void buttonClicked(int band)
+    {
+
+      switch (band)
+      {
+        case 1:
+          bandOne.setToggleState(true, NotificationType::dontSendNotification);
+          bandTwo.setToggleState(false, NotificationType::dontSendNotification);
+          bandThree.setToggleState(false, NotificationType::dontSendNotification);
+          break;
+        case 2:
+
+          bandOne.setToggleState(false, NotificationType::dontSendNotification);
+          bandTwo.setToggleState(true, NotificationType::dontSendNotification);
+          bandThree.setToggleState(false, NotificationType::dontSendNotification);
+          break;
+        case 3:
+          bandOne.setToggleState(false, NotificationType::dontSendNotification);
+          bandTwo.setToggleState(false, NotificationType::dontSendNotification);
+          bandThree.setToggleState(true, NotificationType::dontSendNotification);
+          break;
+      }
+      this->removeChildComponent(2);
     }
+
 
     Colour backgroundColour;
 

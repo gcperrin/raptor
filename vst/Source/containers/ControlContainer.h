@@ -3,11 +3,12 @@
 #include <JuceHeader.h>
 #include "../components/WaveShaperComponent.h"
 
-class ControlContainer: public Component {
+class ControlContainer: public Component
+{
 public:
     ControlContainer()
     {
-        addAndMakeVisible(waveShaperComponent);
+        /* addAndMakeVisible(waveShaperComponent); */
     }
 
     void paint (Graphics& g) override

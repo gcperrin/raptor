@@ -71,9 +71,9 @@ public:
         buttonBorder = bandThreeColor;
       }
 
-     
 
       auto buttonArea = button.getLocalBounds();
+      buttonArea.reduce(5, 5);
       g.setColour (Colours::black.withAlpha (0.5f));
 
       if (button.getToggleState() == true)

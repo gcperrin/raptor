@@ -12,12 +12,12 @@ CoreEditor::CoreEditor (CoreProcessor& p)
     centreWithSize (getWidth(), getHeight());
 
     // setSize (800, 600);
-    addAndMakeVisible(bandEqContainer);
+    /* addAndMakeVisible(bandEqContainer); */
     addAndMakeVisible(bandSelectorContainer);
     addAndMakeVisible(controlContainer);
     setSize (800, 600);
 
-
+    bandSelectorContainer.addComponentListener(this);
 }
 
 CoreEditor::~CoreEditor() {}
@@ -39,4 +39,9 @@ void CoreEditor::resized()
     grid.templateColumns = { Track (1_fr) };
     grid.items = { GridItem (bandEqContainer), GridItem (bandSelectorContainer), GridItem (controlContainer) };
     grid.performLayout (getLocalBounds());
+}
+
+void CoreEditor::componentChildrenChanged(Component& component)
+{
+  addAndMakeVisible(bandEqContainer);
 }

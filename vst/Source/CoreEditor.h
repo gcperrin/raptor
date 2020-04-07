@@ -6,7 +6,7 @@
 #include "containers/BandSelectorContainer.h"
 #include "containers/ControlContainer.h"
 
-class CoreEditor : public AudioProcessorEditor
+class CoreEditor : public AudioProcessorEditor, public ComponentListener
 {
 public:
     CoreEditor (CoreProcessor&);
@@ -14,6 +14,9 @@ public:
 
     void paint (Graphics&) override;
     void resized() override;
+
+    void componentChildrenChanged(Component& component) override;
+
 
 private:
     CoreProcessor& processor;
